@@ -18,6 +18,19 @@ func TestMain(m *testing.M) {
 	fmt.Println("After Unit Test")
 }
 
+func BenchmarkSub(b *testing.B) {
+	b.Run("Ferri", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			HelloWorld("Ferri")
+		}
+	})
+	b.Run("Pradana", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			HelloWorld("Pradana")
+		}
+	})
+}
+
 func BenchmarkHelloWorldFerrian(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		HelloWorld("Ferrian")
@@ -27,6 +40,37 @@ func BenchmarkHelloWorldFerrian(b *testing.B) {
 func BenchmarkHelloWorldTitus(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		HelloWorld("Titus")
+	}
+}
+
+func BenchmarkTable(b *testing.B) {
+	benchmarks := []struct {
+		name    string
+		request string
+	}{
+		{
+			name:    "Ferrian",
+			request: "Ferrian",
+		},
+		{
+			name:    "Titus",
+			request: "Titus",
+		},
+		{
+			name:    "FerrianTitusPradana",
+			request: "Ferrian Titus Pradana",
+		},
+		{
+			name:    "Pradana",
+			request: "Pradana",
+		},
+	}
+	for _, benchmark := range benchmarks {
+		b.Run(benchmark.name, func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				HelloWorld(benchmark.request)
+			}
+		})
 	}
 }
 
