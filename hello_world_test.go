@@ -18,6 +18,18 @@ func TestMain(m *testing.M) {
 	fmt.Println("After Unit Test")
 }
 
+func BenchmarkHelloWorldFerrian(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		HelloWorld("Ferrian")
+	}
+}
+
+func BenchmarkHelloWorldTitus(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		HelloWorld("Titus")
+	}
+}
+
 func TestTableHelloWorld(t *testing.T) {
 	tests := []struct {
 		name     string
@@ -85,7 +97,7 @@ func TestHelloWorldRequire(t *testing.T) {
 
 func TestSkip(t *testing.T) {
 	if runtime.GOOS == "darwin" {
-		t.Skip("Cannot run on Windows OS")
+		t.Skip("Cannot run on Mac OS")
 	}
 
 	result := HelloWorld("Pradana")
